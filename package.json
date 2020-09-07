@@ -1,6 +1,6 @@
 {
   "name": "mrm-preset-thorough",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Tasks for MRM to aid in setting up software projects.",
   "main": "config.json",
   "files": [
