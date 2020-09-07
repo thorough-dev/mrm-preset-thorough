@@ -4,18 +4,7 @@ const { packageJson, install, yaml, getExtsFromCommand } = require('mrm-core');
 
 const packages = { prettier: '>=2' };
 
-const defaultOverrides = [
-  {
-    files: '*.md',
-    options: {
-      printWidth: 70,
-      useTabs: false,
-      trailingComma: 'none',
-      arrowParens: 'avoid',
-      proseWrap: 'never',
-    },
-  },
-];
+const defaultOverrides = [];
 
 const defaultPrettierOptions = {
   printWidth: 80,
@@ -30,6 +19,11 @@ const defaultPrettierOptions = {
   jsxBracketSameLine: false,
   arrowParens: 'always',
   endOfLine: 'lf',
+};
+
+const thoroughPrettierOptions = {
+  singleQuote: true,
+  printWidth: 90,
 };
 
 function getPattern(pkg) {
@@ -65,16 +59,13 @@ function removeDefaultOptions(options) {
   return newOptions;
 }
 
-module.exports = function task({
-  prettierPattern,
-  prettierOptions,
-  prettierOverrides,
-}) {
-  const pkg = packageJson();
-
+module.exports = function task({ prettierOptions, prettierOverrides }) {
   const overrides = prettierOverrides || defaultOverrides;
 
-  const options = removeDefaultOptions({ ...prettierOptions });
+  const options = removeDefaultOptions({
+    ...prettierOptions,
+    ...thoroughPrettierOptions,
+  });
 
   // .prettierrc.yml
   const prettierrc = yaml('.prettierrc.yml');
@@ -96,17 +87,20 @@ module.exports = function task({
     .set('overrides', newOverrides)
     .save();
 
-  const pattern =
-    prettierPattern === 'auto' ? getPattern(pkg) : prettierPattern;
+  // TODO(zachary) For now, don't add an npm task
 
-  pkg
-    // Add format script
-    // Double quotes are essential to support Windows:
-    // https://github.com/prettier/prettier/issues/4086#issuecomment-370228517
-    .setScript('format', `prettier --loglevel warn --write "${pattern}"`)
-    // Add pretest script
-    .appendScript('posttest', 'npm run format')
-    .save();
+  // const pkg = packageJson();
+  // const pattern =
+  //   prettierPattern === 'auto' ? getPattern(pkg) : prettierPattern;
+
+  // pkg
+  //   // Add format script
+  //   // Double quotes are essential to support Windows:
+  //   // https://github.com/prettier/prettier/issues/4086#issuecomment-370228517
+  //   .setScript('format', `prettier --loglevel warn --write "${pattern}"`)
+  //   // Add pretest script
+  //   .appendScript('posttest', 'npm run format')
+  //   .save();
 
   // Dependencies
   install(packages);
