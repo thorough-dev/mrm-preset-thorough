@@ -1,0 +1,35 @@
+{
+  "name": "mrm-preset-thorough",
+  "version": "1.0.0",
+  "description": "Tasks for MRM to aid in setting up software projects.",
+  "main": "config.json",
+  "files": [
+    "config.json",
+    "*/index.js"
+  ],
+  "homepage": "https://github.com/thorough-dev/mrm-preset-thorough#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thorough-dev/mrm-preset-thorough.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thorough-dev/mrm-preset-thorough/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mrm",
+    "mrm-task",
+    "mrm-preset"
+  ],
+  "author": "Zachary Jones <zachary@thorough.company>",
+  "license": "MIT",
+  "dependencies": {
+    "mrm-core": "^4.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1",
+    "prettier": "^2.1.1"
+  }
+}
